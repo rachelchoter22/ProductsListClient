@@ -15,8 +15,20 @@
 // }
 
 function GetFromLocalStorage(getRequest) {
-    return localStorage.getItem(dataKey);
-
+    var response = new Response(404, {});
+    var userArray = JSON.parse(localStorage.getItem(getRequest.RequestData.urlArray[0]));
+    userArray.forEach((user) => {
+        // compere(user,getRequest.itemsArray.length,  )
+        if (user[getRequest.itemsArray[0].key] == getRequest.itemsArray[0].value
+            && user[getRequest.itemsArray[1].key] == getRequest.itemsArray[1].value) {
+            response.data = user;
+            response.status = statusesEnum[200];
+        }
+    });
+    if (!response.status) {
+        response.status = statusesEnum[404];
+    }
+    return response;
 }
 function SetToLocalStorage(postRequest) {
 
@@ -42,3 +54,14 @@ function SetToLocalStorage(postRequest) {
 //     }
 //     else return obj;
 // }
+
+function Response(status, data) {
+    this.status = statusesEnum[status];
+    this.data = data;
+}
+
+let statusesEnum = {
+    200: { 200: 'OK' },
+    204: { 204: 'No content' },
+    404: { 404: 'Not found' }
+}

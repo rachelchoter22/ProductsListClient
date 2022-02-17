@@ -1,9 +1,11 @@
 <script src="./spa.js"></script>
+<script src="./Communication/DB.js"></script>
+
 <script src="./Communication/network.js"></script>
 <script src="./login/login.js"></script>
 <script src="./models/user.model.js"></script>
 <script src="./register/register.js"></script>
-<script src="./Communication/DB.js"></script>
+
 
 <script src="./Communication/server.js"></script>
 
@@ -18,19 +20,19 @@
 </head>
 
 <body>
-    <div  class="page active">
+    <div class="page active">
 
 
         <h2>כניסת משתמש</h2>
         <form>
             <lable>שם</lable>
-            <input id="nameLogIn" type="text" />
+            <input name="userName" type="text" />
             <br>
             <lable>סיסמא</lable>
-            <input id="passwordLogIn" type="password" />
+            <input name="userPassword" type="password" />
             <div id="alart"></div>
         </form>
-        <button onclick="onSubmit()" id="submitLogIn" data-target="productList" class="navigation-btn">כניסה</button>
+        <button onclick="onSubmit()" id="submitLogIn" data-target="productList" class="navigation-btn-">כניסה</button>
         <div>
             <label>אין לך חשבון?</label>
             <a href="#signUp" id="submitMoveToSignUp" data-target="signUp" class="navigation-btn"> הירשם כאן
@@ -49,7 +51,7 @@
             <lable>מייל</lable>
             <input name="userEmail" type="email" />
         </form>
-        <button  data-target="pageList" class="navigation-btn-" onclick="SignUP()">הרשמה</button>
+        <button data-target="pageList" class="navigation-btn-" onclick="SignUP()">הרשמה</button>
     </div>
 
 

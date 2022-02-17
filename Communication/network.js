@@ -30,9 +30,9 @@ class fakeXMLHttpRequest {
         switch (mehodType) {
 
             case 'GET': {
-                var urlItems = getRequestUrlByflatUrl(url.split('?')[1]);
-                this.request = new GetRequestData(urlArray, urlItems);
-            };
+                var urlItems = getItemsArrayByArguments(url.split('?')[1]);
+                this.request = new GetRequestData(this.urlArray, urlItems);
+            } break;;
             case 'POST': {
                 this.request = new PostRequestData(this.urlArray, conetntObject);
             }

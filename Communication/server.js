@@ -2,7 +2,7 @@
 
 function checkIfUserExist(userName, userPassword) {
 
-
+    fakeXMLHttpRequest.prototype.open('GET', '/UserList?userName=' + userName + '&userPassword=' + userPassword);
 }
 // function getRequestDataByUrl(url) {
 //     var splitByQuestionMark = url.split('?'),
