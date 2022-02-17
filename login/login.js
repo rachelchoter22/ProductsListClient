@@ -1,40 +1,40 @@
 
 
-Libs = {};
+// Libs = {};
 
-Libs.loginSingleton = (function () {
+// Libs.loginSingleton = (function () {
 
-    var _loginInstance = null;
+//     var _loginInstance = null;
 
-    function LoginConstractor() {
-
-
-    };
-
-    // LoginConstractor.prototype.onSubmit = () => {
-
-    //     var userName = document.getElementById('userName').value;
-    //     var userPassword = document.getElementById('userPassword').value;
+//     function LoginConstractor() {
 
 
-    //     checkIfUserExist(userName, userPassword);
+//     };
 
-    //     alert('now should send to server')
-    // };
+//     // LoginConstractor.prototype.onSubmit = () => {
 
-    return {
-        getInstance: function () {
-            if (!_loginInstance) {
-                _loginInstance = LoginConstractor;
-                return _loginInstance;
-            }
-            else {
+//     //     var userName = document.getElementById('userName').value;
+//     //     var userPassword = document.getElementById('userPassword').value;
 
-                return _loginInstance;
-            }
-        }
-    };
-}());
+
+//     //     checkIfUserExist(userName, userPassword);
+
+//     //     alert('now should send to server')
+//     // };
+
+//     return {
+//         getInstance: function () {
+//             if (!_loginInstance) {
+//                 _loginInstance = LoginConstractor;
+//                 return _loginInstance;
+//             }
+//             else {
+
+//                 return _loginInstance;
+//             }
+//         }
+//     };
+// }());
 
 //var LoginHandler = Libs.loginSingleton.getInstance();
 //LoginHandler.prototype.onSubmit();
@@ -43,7 +43,7 @@ function onSubmit() {
     var userPassword = document.getElementById('userPassword').value;
 
 
-    var isExist =checkIfUserExist(userName, userPassword);
+    var isExist = checkIfUserExist(userName, userPassword);
 
     alert('now should send to server')
 };

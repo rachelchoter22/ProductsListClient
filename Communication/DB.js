@@ -14,10 +14,31 @@
 //     return DB();
 // }
 
-function Get(dataKey,d) {
+function GetFromLocalStorage(getRequest) {
     return localStorage.getItem(dataKey);
 
 }
-function Post(dataKey, dataToSave) {
-    localStorage.setItem(dataKey, dataToSave);
+function SetToLocalStorage(postRequest) {
+
+    var mainKey = postRequest.RequestData.urlArray[0];
+
+    if (localStorage.getItem(mainKey)) {
+        var usersArray = JSON.parse(localStorage.getItem(mainKey));
+        usersArray.push(postRequest.dataToSave)
+        localStorage.setItem(mainKey, JSON.stringify(usersArray));
+
+    }
+    else {
+        localStorage.setItem(mainKey, JSON.stringify([postRequest.dataToSave]));
+    }
 }
+
+// function reqObj(array, index, obj) {
+//     debugger;
+//     if (array[index]) {
+//         debugger;
+//         obj[array[index]] = obj;
+//         //reqObj(array, index++, obj);
+//     }
+//     else return obj;
+// }

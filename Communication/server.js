@@ -1,43 +1,40 @@
 
-var x = new fakeHttpRequest()
-
-x.open('Get',url);
-
-class fakeHttpRequest {
-
-    open(mehodType, url ) {
-
-    }
-
-}
 
 function checkIfUserExist(userName, userPassword) {
-    var variablesUrl = `?userName=${userName}`;
-    return fakeHttpRequest('Get', '/userList', variablesUrl)
+
+
 }
-function fakeHttpRequest(mehodType, url, variablesUrl) {
-    return serverMethod(mehodType, url, variablesUrl);
-}
-var serverMethod = (mehodType, key, variablesUrl) => {
+// function getRequestDataByUrl(url) {
+//     var splitByQuestionMark = url.split('?'),
+//         splitByAmpersand = splitByQuestionMark[1].split('&'),
+//         splitByProfit = [];
 
-    var splittedArray = variablesUrl.split('=');
-    splittedArray[0] = splittedArray[0].replace('?', '');
+//     splitByAmpersand.forEach(element => {
+//         var key = element.split('=')[0];
+//         var value = element.split('=')[1];
+//         var item = new Item(key, value);
+//         splitByProfit.push(item);
+//     });
 
-    var dataObject = { key: splittedArray[0], value: splittedArray[1] };
-
-    return MethodObject[mehodType].apply(this, [key.replace('/', ''), dataObject])
-};
-
-var MethodObject = {
-
-    Get: Get
-}
-// function Get(dataKey, dataKey) {
+//     return new RequestData(, splitByProfit);
 
 // }
-// function Post(contentToPost) { }
-// function Delete() { }
 
-// var u = new User();
 
-// localStorage.setUser('userList')
+// function checkIfUserExist(userName, userPassword) {
+//     var variablesUrl = `?userName=${userName}`;
+//     return fakeHttpRequest('Get', '/userList', variablesUrl)
+// }
+// function fakeHttpRequest(mehodType, url, variablesUrl) {
+//     return serverMethod(mehodType, url, variablesUrl);
+// }
+// function serverMethod(mehodType, key, variablesUrl) {
+
+//     var splittedArray = variablesUrl.split('=');
+//     splittedArray[0] = splittedArray[0].replace('?', '');
+
+//     var dataObject = { key: splittedArray[0], value: splittedArray[1] };
+
+//     return MethodObject[mehodType].apply(this, [key.replace('/', ''), dataObject])
+// };
+
