@@ -1,4 +1,4 @@
-#general{
+#general {
     display: flex;
     /* justify-content: space-around; */
     font-size: 30px;
@@ -6,7 +6,7 @@
     padding: 20px;
     margin: 0;
 }
-#logIn{
+#logIn {
     background-color: rgb(124, 173, 236);
     color: rgb(25, 112, 211);
     width: 25%;
@@ -14,27 +14,27 @@
     padding: 40px;
     border-radius: 10px;
     margin: 50px;
-
 }
-.page{
+.page {
     display: none;
     /* min-height: 100%; */
     /* position: fixed; */
 }
-.active{
+.active {
     display: block;
 }
-#general button{
-    border:none;
+#general button {
+    border: none;
     color: white;
     font-size: 20px;
     font-weight: bold;
-    background-color:rgb(25, 112, 211);  
+    background-color: rgb(25, 112, 211);
     margin-left: 30px;
 }
-#nameLogIn ,passwordLogIn{
-margin: 20px;
+#nameLogIn,
+passwordLogIn {
+    margin: 20px;
 }
-#logIn h2{
+#logIn h2 {
     font-size: x-large;
 }

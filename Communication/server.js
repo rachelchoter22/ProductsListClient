@@ -1,8 +1,8 @@
 
 
 function checkIfUserExist(userName, userPassword) {
-
-    fakeXMLHttpRequest.prototype.open('GET', '/UserList?userName=' + userName + '&userPassword=' + userPassword);
+    var fxhr = new FXMLHttpRequest();
+    fxhr.prototype.open('GET', '/UserList?userName=' + userName + '&userPassword=' + userPassword);
 }
 // function getRequestDataByUrl(url) {
 //     var splitByQuestionMark = url.split('?'),
