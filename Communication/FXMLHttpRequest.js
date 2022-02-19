@@ -16,9 +16,8 @@ function Item(key, value) {
     this.value = value;
 }
 var MethodObject = {
-
-    GET: GetFromLocalStorage,
-    POST: SetToLocalStorage
+    GET: DB.prototype.GetFromLocalStorage,
+    POST: DB.prototype.SetToLocalStorage
 }
 class FXMLHttpRequest {
 
@@ -59,7 +58,13 @@ class FXMLHttpRequest {
     send() {
         this.readyState = 'HEADERS_RECEIVED';
         this.onChangeState();
-        MethodObject[this.methodType].apply(this, [this.request])
+        this.response = MethodObject[this.methodType].apply(this, [this.request]);
+        this.readyState = 'LOADING';
+        this.onChangeState();
+        if (this.response) {
+            this.readyState = 'DONE';
+            this.onChangeState();
+        }
     }
     onload() {
         this.readyState = 'LOADING';
@@ -71,6 +76,7 @@ function getRequestUrlByflatUrl(flattUrl) {
     return flattUrl.split('/').splice(1, 4)
 }
 function getItemsArrayByArguments(urlArguments) {
+    if(!urlArguments) return;
     var splitByProfit = [];
     urlArguments.split('&').forEach(element => {
         var key = element.split('=')[0];

@@ -2,18 +2,18 @@ const app = {
     pages: [],
     show: new Event("show"),
     init: init,
-    navigateTo: navigateTo,
+    onNavigateClick: onNavigateClick,
     pageShown: ShowPage,
     poppin: popIn,
 };
 document.addEventListener("DOMContentLoaded", app.init);
 
 function init() {
-   
+
     document.querySelectorAll(".navigation-btn")
-    .forEach((link) => {
-        link.addEventListener("click", app.navigateTo);
-    });
+        .forEach((link) => {
+            link.addEventListener("click", app.onNavigateClick);
+        });
     // console.log("hi");
     // app.pages = document.querySelectorAll(".page");
     // app.pages.forEach((pg) => {
@@ -22,23 +22,25 @@ function init() {
     // document.querySelectorAll(".navigation-btn").forEach((link) => {
     //     link.addEventListener("click", app.nav);
     // });
-    // history.replaceState({}, "logIn", "?");
+    history.replaceState({}, "logIn", "?");
     // window.addEventListener("click", app.poppin);
 
 }
-
-function navigateTo(ev) {
+function onNavigateClick(ev) {
     ev.preventDefault();
-    let currentPage = ev.target.getAttribute("data-target");
+    let pageName = ev.target.getAttribute("data-target");
+    navigateTo(pageName);
+}
+function navigateTo(pageName) {
 
-    var targetPageElement = document.querySelector('[data-current='+ currentPage+']');
+    var targetPageElement = document.querySelector('[data-current=' + pageName + ']');
 
-    document.querySelector('[data-target='+ currentPage+']')
+    document.querySelector('[data-target=' + pageName + ']')
     document.querySelector(".active").classList.remove("active");
     targetPageElement.classList.add('active');
     // document.getElementsByTagName(currentPage).classList.add("active");
-    history.pushState({}, currentPage, `#${currentPage}`);
-    targetPageElement.dispatchEvent(app.show);
+    history.pushState({}, pageName, `#${pageName}`);
+    // targetPageElement.dispatchEvent(app.show);
 }
 function ShowPage(ev) {
     console.log("page", ev.target.id, "just shown");

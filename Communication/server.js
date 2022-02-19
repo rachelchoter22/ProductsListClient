@@ -2,7 +2,19 @@
 
 function checkIfUserExist(userName, userPassword) {
     var fxhr = new FXMLHttpRequest();
-    fxhr.prototype.open('GET', '/UserList?userName=' + userName + '&userPassword=' + userPassword);
+    fxhr.open('GET', '/UserList?userName=' + userName + '&userPassword=' + userPassword);
+    fxhr.onreadystatechange = (() => {
+        if (fxhr.readyState == 'DONE') {
+            if (fxhr.response.status == 200) {
+                buildProductListHtml();
+            }
+            else {
+                alert('המשתמש לא קיים יש להירשם');
+                navigateTo('signUp');
+            }
+        }
+    });
+    fxhr.send();
 }
 // function getRequestDataByUrl(url) {
 //     var splitByQuestionMark = url.split('?'),

@@ -39,13 +39,10 @@
 //var LoginHandler = Libs.loginSingleton.getInstance();
 //LoginHandler.prototype.onSubmit();
 function onSubmit() {
-    var userName = document.querySelector('input[name="userName"]').value;
-    var userPassword = document.querySelector('input[name="userPassword"]').value;
+    var userName = document.querySelector('.page.active  input[name="userName"]').value;
+    var userPassword = document.querySelector('.page.active  input[name="userPassword"]').value;
 
 
-    var res = checkIfUserExist(userName, userPassword);
-    if (res.status.key == 200) {
+    checkIfUserExist(userName, userPassword);
 
-    }
-    else alert('need to sign up')
 };

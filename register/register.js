@@ -1,25 +1,20 @@
 function SignUP() {
 
-    var userName = document.querySelector('input[name="userName"').value;
-    var userPassword = document.querySelector('input[name="userPassword"').value;
-    var userEmail = document.querySelector('input[name="userEmail"').value;
+    var userName = document.querySelector('.page.active  input[name="userName"').value;
+    var userPassword = document.querySelector('.page.active  input[name="userPassword"').value;
+    var userEmail = document.querySelector('.page.active input[name="userEmail"').value;
 
-    var user = UserSinglton.getUser(
-        {
-            userName: userName, userPassword: userPassword, userEmail: userEmail
-        });
+    var user = UserSinglton.getUser(userName, userPassword, userEmail);
     var fxhr = new FXMLHttpRequest();
-    fxhr.onreadystatechange = function () {
-        console.log(fxhr.readyState)
-    };
-    console.log('UNSENT: ', fxhr.status);
 
     fxhr.open('POST', '/UserList', user);
+
+    fxhr.onreadystatechange = function () {
+        if (fxhr.readyState == 'DONE') {
+            if (fxhr.response.status == 200) {
+                buildProductListHtml();
+            }
+        }
+    };
     fxhr.send();
-    
-}
-
-
-function a() {
-    console.log('dsada');
 }

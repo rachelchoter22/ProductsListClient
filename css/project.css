@@ -1,3 +1,43 @@
+body {
+    font-family: myFirstFont, sans-serif;
+    font-weight: 400;
+}
+@font-face {
+    font-family: myFirstFont;
+    src: url("./fonts/MPLUSRounded1c-Black.ttf");
+}
+.wrapper-card {
+    margin: 4rem 20rem;
+    border: 1px solid black;
+    min-height: 25rem;
+    max-width: 22rem;
+    padding: 2rem;
+}
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+input,
+input:hover,
+input:focus {
+    outline: 0;
+
+    /* border: none; */
+    border-width: 0px 0px 1px 0px;
+    height: 2rem;
+}
+.btn {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 0.5rem;
+    width: 10rem;
+    font-family: "myFirstFont";
+    font-weight: bold;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
 #general {
     display: flex;
     /* justify-content: space-around; */

@@ -9,18 +9,18 @@ UserSinglton = (function () {
     // };
     // function getUser()
     return {
-        getInstance: function () {
-            if (!_instance) {
-                _instance = UserSingltonConstractor;
-                return _instance;
-            }
-            else {
+        // getInstance: function () {
+        //     if (!_instance) {
+        //         _instance = UserSingltonConstractor;
+        //         return _instance;
+        //     }
+        //     else {
 
-                return _instance;
-            }
-        },
-        getUser: function (user) {
-            return new User(++id, user.userName, user.userPassword, user.userEmail);
+        //         return _instance;
+        //     }
+        // },
+        getUser: function (userName, userPassword, userEmail) {
+            return new User(++id, userName, userPassword, userEmail);
         }
     };
 }());
