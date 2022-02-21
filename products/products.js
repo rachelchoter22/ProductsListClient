@@ -5,7 +5,7 @@ function addProduct() {
     var productAmount = document.querySelector('.page.active input[name="productAmount"]').value;
     var product = new Product(productName, productCompany, productAmount);
     var fxhr = new FXMLHttpRequest();
-    fxhr.open('POST', '/productList', product)
+    fxhr.open('POST', '/currentUser/productList', product)
 
     fxhr.onreadystatechange = function () {
         if (fxhr.readyState == 'DONE') {
@@ -15,23 +15,32 @@ function addProduct() {
             else if (fxhr.response.status == 403) {
                 alert('המוצר כבר קיים');
             }
+            else if (fxhr.response.status == 500) {
+                console.log(fxhr.response.data);
+            }
         }
     };
     fxhr.send();
 }
+//נקראת בכל שינוי ברשימת מוצרים
 function buildProductListHtml() {
     var fxhr = new FXMLHttpRequest();
-    fxhr.open('GET', '/productList')
+    fxhr.open('GET', '/currentUser/productList')
 
     fxhr.onreadystatechange = function () {
         if (fxhr.readyState == 'DONE') {
             if (fxhr.response.status == 200) {
+                //מעדכנים רשימת מוצרים תחת UserList
+                updateProductListInUsers(fxhr.response.body);
                 document.getElementsByClassName('card-list')[0].innerHTML = createHtml(fxhr.response.body);
                 navigateTo('productList');
 
             }
             else if (fxhr.response.status == 404) {
                 navigateTo('productList');
+            }
+            else if (fxhr.response.status == 500) {
+                console.log(fxhr.response.data);
             }
         }
     };
@@ -62,24 +71,81 @@ function deleteProduct(event) {
         product = null;
     event.currentTarget.parentElement.querySelectorAll('div[class="card-row"]').
         forEach(div => {
-            arrayValues.push(div.innerText.split(':')[1].replace(' ',''));
+            arrayValues.push(div.innerText.split(':')[1].replace(' ', ''));
         });
     product = new Product(arrayValues[0], arrayValues[1], arrayValues[2]);
     var fxhr = new FXMLHttpRequest();
-    fxhr.open('DELETE', `/productList?productName=${product.productName}&productCompany=${product.productCompany}`);
+    fxhr.open('DELETE', `/currentUser/productList?productName=${product.productName}&productCompany=${product.productCompany}`);
 
     fxhr.onreadystatechange = function () {
         if (fxhr.readyState == 'DONE') {
             if (fxhr.response.status == 200) {
                 buildProductListHtml();
             }
-
+            else if (fxhr.response.status == 500) {
+                console.log(fxhr.response.data);
+            }
             else console.log(fxhr.response.status)
 
         }
     };
     fxhr.send();
 }
-function editProduct(event) {
-    console.log(event)
+function editProductAmount(event) {
+    var arrayValues = [],
+        product = null;
+    event.currentTarget.parentElement.querySelectorAll('div[class="card-row"]').
+        forEach(div => {
+            arrayValues.push(div.innerText.split(':')[1].replace(' ', ''));
+        });
+    product = new Product(arrayValues[0], arrayValues[1], arrayValues[2]);
+
+    product.productAmount++;
+    var fxhr = new FXMLHttpRequest();
+    fxhr.open('PUT', `/currentUser/productList?productName=${product.productName}&productCompany=${product.productCompany}&productAmount=${(product.productAmount - 1)}`, product);
+
+    fxhr.onreadystatechange = function () {
+        if (fxhr.readyState == 'DONE') {
+            if (fxhr.response.status == 200) {
+                buildProductListHtml();
+            }
+            else if (fxhr.response.status == 500) {
+                console.log(fxhr.response.data);
+            }
+        }
+    };
+    fxhr.send();
+}
+
+function updateProductListInUsers(products) {
+    var user = null;
+    var fxhr = new FXMLHttpRequest();
+    fxhr.open('GET', '/currentUser');
+    fxhr.onreadystatechange = function () {
+        if (fxhr.readyState == 'DONE') {
+            if (fxhr.response.status == 200) {
+                user = fxhr.response.body;
+            }
+            else if (fxhr.response.status == 500) {
+                console.log(fxhr.response.data);
+            }
+        }
+    };
+    fxhr.send();
+
+    var fxhr = new FXMLHttpRequest();
+    fxhr.open('POST', `/UserList/productList?userName=${user.userName}&userPassword=${user.userPassword}`, products);
+    fxhr.setRequestHeader('search-in-first', true);
+    fxhr.onreadystatechange = function () {
+        if (fxhr.readyState == 'DONE') {
+            if (fxhr.response.status == 200) {
+                console.log('products saved');
+
+            }
+            else if (fxhr.response.status == 500) {
+                console.log(fxhr.response.data);
+            }
+        }
+    };
+    fxhr.send();
 }

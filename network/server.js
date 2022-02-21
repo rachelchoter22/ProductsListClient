@@ -12,14 +12,18 @@ function checkIfUserExist(userName, userPassword) {
             else if (fxhr.response.status == 403) {
                 alert('המשתמש קיים');
             }
-            else {
+            else if (fxhr.response.status == 404) {
                 alert('המשתמש לא קיים יש להירשם');
                 navigateTo('signUp');
+            }
+            else {
+                console.log(fxhr.response.data);
             }
         }
     });
     fxhr.send();
 }
+//נקרא בעת הרשמה ולוגין
 function initCurrentUser(user) {
     var fxhr = new FXMLHttpRequest();
     fxhr.open('POST', '/currentUser', user);
@@ -30,12 +34,14 @@ function initCurrentUser(user) {
             }
             else if (fxhr.response.status == 403) {
             }
-            else {
+            else if (fxhr.response.status == 500) {
+                console.log(fxhr.response.data);
             }
         }
     });
     fxhr.send();
 }
+//בודק אם יש יוזר בלוגין
 function isLogIn() {
     var res;
     var fxhr = new FXMLHttpRequest();
@@ -43,11 +49,13 @@ function isLogIn() {
     fxhr.onreadystatechange = (() => {
         if (fxhr.readyState == 'DONE') {
             if (fxhr.response.status == 200) {
+                // בודק אם חזר יוזר תחת currentUser
                 if (fxhr.response.body) {
                     res = true;
                 }
             }
-            else {
+            else if (fxhr.response.status == 500) {
+                console.log(fxhr.response.data);
                 res = false;
             }
         }
@@ -55,6 +63,7 @@ function isLogIn() {
     fxhr.send();
     return res;
 }
+//כפתור יציאה - מוחקים את currentUser
 function logOut() {
     var fxhr = new FXMLHttpRequest();
     fxhr.open('DELETE', '/currentUser');
@@ -65,7 +74,8 @@ function logOut() {
                     res = true;
                 }
             }
-            else {
+            else if (fxhr.response.status == 500) {
+                console.log(fxhr.response.data);
                 res = false;
             }
         }

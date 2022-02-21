@@ -33,6 +33,7 @@ function init() {
     //     link.addEventListener("click", app.nav);
     // });
     history.replaceState({}, "logIn", "?");
+    //בדיקה אם יש יוזר בלוגין
     var isLogin = isLogIn();
     if (isLogin) {
         buildProductListHtml();

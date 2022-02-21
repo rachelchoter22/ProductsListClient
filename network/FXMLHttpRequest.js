@@ -1,14 +1,9 @@
 
-function RequestData(urlArray) {
-    this.urlArray = urlArray;
-}
-function GetRequestData(urlArray, itemsArray) {
-    this.RequestData = new RequestData(urlArray);
-    this.itemsArray = itemsArray;
-}
-function PostRequestData(urlArray, dataToSave) {
-    this.RequestData = new RequestData(urlArray);
+function RequestData(urls, parameters, dataToSave = null, headers) {
+    this.urls = urls;
+    this.parameters = parameters;
     this.dataToSave = dataToSave;
+    this.headers = headers
 }
 function Item(key, value) {
     this.key = key;
@@ -17,7 +12,8 @@ function Item(key, value) {
 var MethodObject = {
     GET: DB.prototype.GetFromLocalStorage,
     POST: DB.prototype.SetToLocalStorage,
-    DELETE: DB.prototype.deleteFromLocalStorage
+    DELETE: DB.prototype.deleteFromLocalStorage,
+    PUT: DB.prototype.updateLocalStorage
 }
 class FXMLHttpRequest {
 
@@ -29,27 +25,32 @@ class FXMLHttpRequest {
         this.request = null;
         this.response = null;
         this.onreadystatechange = null;
-        this.Headers = [];
+        this.headers = {};
     }
     open(methodType, url, conetntObject) {
         this.readyState = 'OPENED';
         this.onChangeState();
         this.methodType = methodType;
         var urlArray = getRequestUrlByflatUrl(url.split('?')[0])
+        var urlItems = getItemsArrayByArguments(url.split('?')[1]);
+
         switch (methodType) {
             case 'DELETE':
             case 'GET': {
-                var urlItems = getItemsArrayByArguments(url.split('?')[1]);
-                this.request = new GetRequestData(urlArray, urlItems);
+                this.request = new RequestData(urlArray, urlItems, null, this.headers);
             } break;
             case 'POST': {
-                this.request = new PostRequestData(urlArray, conetntObject);
+                this.request = new RequestData(urlArray, urlItems, conetntObject, this.headers);
             } break;
+            case 'PUT': {
+                this.request = new RequestData(urlArray, urlItems, conetntObject, this.headers);
+            }
+
         }
     }
-    //
+
     setRequestHeader(headerName, headerValue) {
-        this.Headers.push({ headerName: headerName, headerValue: headerValue })
+        this.headers[headerName] = headerValue;
     }
     onChangeState() {
         if (typeof this.onreadystatechange === 'function')
@@ -73,8 +74,9 @@ class FXMLHttpRequest {
 }
 
 function getRequestUrlByflatUrl(flattUrl) {
-    return flattUrl.split('/').splice(1, 4)
+    return flattUrl.split('/').splice(1, 10)
 }
+//לוקח את הערכים לחיפוש לפי & ואחכ =
 function getItemsArrayByArguments(urlArguments) {
     if (!urlArguments) return;
     var splitByProfit = [];
