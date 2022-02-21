@@ -18,7 +18,7 @@ body {
     min-height: 25rem;
     max-width: 22rem;
     padding: 2rem;
-    border-radius: ;
+    border-radius: 1px;
 }
 .flex-col {
     display: flex;
