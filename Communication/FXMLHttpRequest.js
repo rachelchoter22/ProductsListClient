@@ -1,7 +1,6 @@
 
 function RequestData(urlArray) {
     this.urlArray = urlArray;
-
 }
 function GetRequestData(urlArray, itemsArray) {
     this.RequestData = new RequestData(urlArray);
@@ -17,7 +16,8 @@ function Item(key, value) {
 }
 var MethodObject = {
     GET: DB.prototype.GetFromLocalStorage,
-    POST: DB.prototype.SetToLocalStorage
+    POST: DB.prototype.SetToLocalStorage,
+    DELETE: DB.prototype.deleteFromLocalStorage
 }
 class FXMLHttpRequest {
 
@@ -37,14 +37,14 @@ class FXMLHttpRequest {
         this.methodType = methodType;
         var urlArray = getRequestUrlByflatUrl(url.split('?')[0])
         switch (methodType) {
-
+            case 'DELETE':
             case 'GET': {
                 var urlItems = getItemsArrayByArguments(url.split('?')[1]);
                 this.request = new GetRequestData(urlArray, urlItems);
-            } break;;
+            } break;
             case 'POST': {
                 this.request = new PostRequestData(urlArray, conetntObject);
-            }
+            } break;
         }
     }
     //
@@ -76,7 +76,7 @@ function getRequestUrlByflatUrl(flattUrl) {
     return flattUrl.split('/').splice(1, 4)
 }
 function getItemsArrayByArguments(urlArguments) {
-    if(!urlArguments) return;
+    if (!urlArguments) return;
     var splitByProfit = [];
     urlArguments.split('&').forEach(element => {
         var key = element.split('=')[0];

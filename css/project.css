@@ -1,4 +1,10 @@
+:root {
+    --color-orange: #fe8600;
+    --color-green: #8cd757;
+    direction: rtl;
+}
 body {
+    background-color: var(--color-green);
     font-family: myFirstFont, sans-serif;
     font-weight: 400;
 }
@@ -12,6 +18,7 @@ body {
     min-height: 25rem;
     max-width: 22rem;
     padding: 2rem;
+    border-radius: ;
 }
 .flex-col {
     display: flex;
@@ -21,13 +28,14 @@ input,
 input:hover,
 input:focus {
     outline: 0;
-
+    background: transparent;
     /* border: none; */
     border-width: 0px 0px 1px 0px;
+    border-color: black;
     height: 2rem;
 }
 .btn {
-    background-color: white;
+    background-color: var(--color-orange);
     border: 1px solid black;
     border-radius: 12px;
     padding: 0.5rem;
@@ -77,4 +85,21 @@ passwordLogIn {
 }
 #logIn h2 {
     font-size: x-large;
+}
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+.product-card {
+    border: 1px solid var(--color-orange);
+    background-color: var(--color-orange);
+    border-radius: 5px;
+    max-width: 250px;
+    padding: 15px;
+}
+.product-card button {
+    background-color: var(--color-green);
+    border: 1px solid var(--color-green);
+    padding: 2px;
+    margin: 2px;
 }

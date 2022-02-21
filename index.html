@@ -1,14 +1,3 @@
-<script src="./spa.js"></script>
-<script src="./Communication/DB.js"></script>
-
-<script src="./Communication/FXMLHttpRequest.js"></script>
-<script src="./login/login.js"></script>
-<script src="./models/user.model.js"></script>
-<script src="./models/product.model.js"></script>
-<script src="./register/register.js"></script>
-<script src="./products/products.js"></script>
-<script src="./Communication/server.js"></script>
-
 <html lang="en" dir="rtl">
 
 <head>
@@ -20,7 +9,7 @@
 </head>
 
 <body>
-    <div class="page active wrapper-card">
+    <div data-current="logIn" class="page active wrapper-card">
 
         <div>
             <h2>כניסת משתמש</h2>
@@ -60,22 +49,10 @@
     <div data-current="productList" class="page">
         <h2> רשימת הקניות שלי</h2>
         <div class="card-list">
-            <form>
-                <h3>שם המוצר</h3>
-                <div id="productName"></div>
-                <label>כמות </label>
-                <input id="prudactAmount" type="text">
-                <label>שם החברה </label>
-                <input id="prudactCompany" type="text">
-            </form>
+
         </div>
         <button data-target="newProduct" class="navigation-btn">הוספת מוצר</button>
-        <button id="clearProduct" class="navigation-btn">מחיקת המוצר</button>
-        <button id="putProduct" class="navigation-btn">עדכון המוצר</button>
-        <div id="general">
-            <button id="addProduct" data-target="newProduct" class="navigation-btn">הוספת מוצר חדש לרשימה</button>
-            <button id="listProduct" data-target="productList" class="navigation-btn">רשימת המוצרים</button>
-        </div>
+
     </div>
     <div data-current="newProduct" class="page wrapper-card">
         <h2>הכנס פרטי מוצר</h2>
@@ -90,9 +67,18 @@
         <button onclick="addProduct()">הוספת המוצר לרשימה</button>
     </div>
     <nav>
-        <button id="logOut" data-target="logIn" class="navigation-btn" ב>יציאה מהמשתמש</button>
+        <button id="logOut" onclick="logOut()" data-target="logIn" class="navigation-btn">יציאה</button>
 
     </nav>
-
+    <script src="./Communication/server.js" ></script>
+    <script src="./spa.js" ></script>
+    <script src="./Communication/DB.js" ></script>
+    
+    <script src="./Communication/FXMLHttpRequest.js" ></script>
+    <script src="./login/login.js" ></script>
+    <script src="./models/user.model.js" ></script>
+    <script src="./models/product.model.js" ></script>
+    <script src="./register/register.js" ></script>
+    <script src="./products/products.js" ></script>
 
 </body>
