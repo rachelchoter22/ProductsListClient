@@ -1,15 +1,19 @@
 class server {
-    
+
 
     GetFromLocalStorage(request) {
 
         var response = new FResponse(404, {}),
             storageKey = request.urls[0],
-            storgeValue = JSON.parse(localStorage.getItem(storageKey));
+            storgeValue = JSON.parse(DB.prototype.Get(storageKey));
         try {
             if (!storgeValue) return response;
             var data = getResByRequest(request);
-            response = new FResponse(200, data);
+            if (data) {
+                response = new FResponse(200, data);
+
+            }
+            else return response;
         }
         catch (err) {
             response = new FResponse(500, err)
@@ -20,10 +24,10 @@ class server {
     SetToLocalStorage(request) {
         var response = new FResponse(404, {}),
             storageKey = request.urls[0],
-            storgeValue = JSON.parse(localStorage.getItem(storageKey));
+            storgeValue = JSON.parse(DB.prototype.Get(storageKey));
         try {
             if (!storgeValue) {
-                localStorage.setItem(storageKey, JSON.stringify(request.dataToSave));
+                DB.prototype.Set(storageKey, JSON.stringify(request.dataToSave));
                 response = new FResponse(200, request.dataToSave);
             }
             else {
@@ -33,7 +37,7 @@ class server {
                     response = new FResponse(403);
                 else {
                     var sValue = setToStorageByUrls(request.urls, request.dataToSave);
-                    localStorage.setItem(storageKey, JSON.stringify(sValue));
+                    DB.prototype.Set(storageKey, JSON.stringify(sValue));
                     response = new FResponse(200, sValue);
                 }
             }
@@ -48,15 +52,15 @@ class server {
     deleteFromLocalStorage(request) {
         var response = new FResponse(404, {}),
             storageKey = request.urls[0],
-            storgeValue = JSON.parse(localStorage.getItem(storageKey));
+            storgeValue = JSON.parse(DB.prototype.Get(storageKey));
         try {
             if (!storgeValue) return response;
             if (request.parameters) {
                 deleteFromStorageByUrls(request, storgeValue);
-                localStorage.setItem(storageKey, JSON.stringify(storgeValue));
+                DB.prototype.Set(storageKey, JSON.stringify(storgeValue));
             }
             else {
-                localStorage.removeItem(storageKey);
+                DB.prototype.Remove(storageKey);
             }
             response = new FResponse(200, storgeValue);
         }
@@ -69,12 +73,12 @@ class server {
     updateLocalStorage(request) {
         var response = new FResponse(404, {}),
             storageKey = request.urls[0],
-            storgeValue = JSON.parse(localStorage.getItem(storageKey));
+            storgeValue = JSON.parse(DB.prototype.Get(storageKey));
         try {
             if (!storgeValue) return response;
             if (request.parameters) {
                 updateStorageByUrls(request, storgeValue);
-                localStorage.setItem(storageKey, JSON.stringify(storgeValue));
+                DB.prototype.Set(storageKey, JSON.stringify(storgeValue));
                 response = new FResponse(200, storgeValue);
 
             }
@@ -102,7 +106,7 @@ let statusesEnum = {
 };
 function getResByRequest(request) {
     var key = request.urls[0],
-        storageValue = JSON.parse(localStorage.getItem(key)),
+        storageValue = JSON.parse(DB.prototype.Get(key)),
         resData = storageValue;
     if (request.headers && request.headers['search-in-first'] == true) {
         if (request.parameters)
@@ -119,13 +123,14 @@ function getResByRequest(request) {
         if (request.parameters)
             request.parameters.forEach(parameter => {
                 resData = resData.filter(item => item[parameter.key] == parameter.value);
+                if(!resData.length) resData = null
             })
     }
     return resData;
 }
 function setToStorageByUrls(urls, dataToSave) {
     var key = urls[0],
-        storageValue = JSON.parse(localStorage.getItem(key)),
+        storageValue = JSON.parse(DB.prototype.Get(key)),
         pointerForEdit = storageValue;
 
     urls.forEach((url, index) => {

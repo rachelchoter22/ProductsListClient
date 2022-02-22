@@ -9,12 +9,12 @@ function Item(key, value) {
     this.key = key;
     this.value = value;
 }
-// var MethodObject = {
-//     GET: Network.prototype.GET,
-//     POST: Network.prototype.POST,
-//     DELETE: Network.prototype.DELETE,
-//     PUT: Network.prototype.PUT
-// }
+var MethodObject = {
+    GET: server.prototype.GetFromLocalStorage,
+    POST: server.prototype.SetToLocalStorage,
+    DELETE: server.prototype.deleteFromLocalStorage,
+    PUT: server.prototype.updateLocalStorage
+}
 class FXMLHttpRequest {
 
 
@@ -39,9 +39,7 @@ class FXMLHttpRequest {
             case 'GET': {
                 this.request = new RequestData(urlArray, urlItems, null, this.headers);
             } break;
-            case 'POST': {
-                this.request = new RequestData(urlArray, urlItems, conetntObject, this.headers);
-            } break;
+            case 'POST':
             case 'PUT': {
                 this.request = new RequestData(urlArray, urlItems, conetntObject, this.headers);
             }
@@ -59,7 +57,7 @@ class FXMLHttpRequest {
     send() {
         this.readyState = 'HEADERS_RECEIVED';
         this.onChangeState();
-        this.response = server.prototype.startAction(this.methodType, this.request); //MethodObject[this.methodType].apply(this, [this.request]);
+        this.response = MethodObject[this.methodType].apply(this, [this.request]);
         this.readyState = 'LOADING';
         this.onChangeState();
         if (this.response) {
