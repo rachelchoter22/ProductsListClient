@@ -5,7 +5,7 @@ function addProduct() {
     var productAmount = document.querySelector('.page.active input[name="productAmount"]').value;
     var product = new Product(productName, productCompany, productAmount);
     var fxhr = new FXMLHttpRequest();
-    fxhr.open('POST', '/currentUser/productList', product)
+    fxhr.open('POST', '/currentUser/productList', product);
 
     fxhr.onreadystatechange = function () {
         if (fxhr.readyState == 'DONE') {
@@ -31,7 +31,7 @@ function buildProductListHtml() {
         if (fxhr.readyState == 'DONE') {
             if (fxhr.response.status == 200) {
                 //מעדכנים רשימת מוצרים תחת UserList
-                updateProductListInUsers(fxhr.response.body);
+                updateProductListInUsers(fxhr.response.body.productList);
                 document.getElementsByClassName('card-list')[0].innerHTML = createHtml(fxhr.response.body);
                 navigateTo('productList');
 
@@ -134,7 +134,7 @@ function updateProductListInUsers(products) {
     fxhr.send();
 
     var fxhr = new FXMLHttpRequest();
-    fxhr.open('POST', `/UserList/productList?userName=${user.userName}&userPassword=${user.userPassword}`, products);
+    fxhr.open('PUT', `/UserList/productList?userName=${user.userName}&userPassword=${user.userPassword}`, products);
     fxhr.setRequestHeader('search-in-first', true);
     fxhr.onreadystatechange = function () {
         if (fxhr.readyState == 'DONE') {

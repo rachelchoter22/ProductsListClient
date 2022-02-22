@@ -9,12 +9,12 @@ function Item(key, value) {
     this.key = key;
     this.value = value;
 }
-var MethodObject = {
-    GET: DB.prototype.GetFromLocalStorage,
-    POST: DB.prototype.SetToLocalStorage,
-    DELETE: DB.prototype.deleteFromLocalStorage,
-    PUT: DB.prototype.updateLocalStorage
-}
+// var MethodObject = {
+//     GET: Network.prototype.GET,
+//     POST: Network.prototype.POST,
+//     DELETE: Network.prototype.DELETE,
+//     PUT: Network.prototype.PUT
+// }
 class FXMLHttpRequest {
 
 
@@ -59,7 +59,7 @@ class FXMLHttpRequest {
     send() {
         this.readyState = 'HEADERS_RECEIVED';
         this.onChangeState();
-        this.response = MethodObject[this.methodType].apply(this, [this.request]);
+        this.response = server.prototype.startAction(this.methodType, this.request); //MethodObject[this.methodType].apply(this, [this.request]);
         this.readyState = 'LOADING';
         this.onChangeState();
         if (this.response) {
